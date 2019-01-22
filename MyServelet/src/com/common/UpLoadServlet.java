@@ -62,7 +62,7 @@ public class UpLoadServlet extends HttpServlet {
         }catch (Exception e){
 
         }if (file1 != null){
-            
+
         }
 
     }
