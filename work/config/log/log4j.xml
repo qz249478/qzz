@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration debug="true">
+
+	<!-- ========================== 自定义输出格式说明================================ -->
+	<!-- %p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL -->
+	<!-- #%r 输出自应用启动到输出该log信息耗费的毫秒数 -->
+	<!-- #%c 输出所属的类目，通常就是所在类的全名 -->
+	<!-- #%t 输出产生该日志事件的线程名 -->
+	<!-- #%n 输出一个回车换行符，Windows平台为“\r\n”，Unix平台为“\n” -->
+	<!-- #%d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss,SSS}，输出类似：2002年10月18日 
+		22：10：28，921 -->
+	<!-- #%l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10) -->
+	<!-- ========================================================================== -->
+
+	<!-- ========================== 输出方式说明================================ -->
+	<!-- Log4j提供的appender有以下几种: -->
+	<!-- org.apache.log4j.ConsoleAppender(控制台), -->
+	<!-- org.apache.log4j.FileAppender(文件), -->
+	<!-- org.apache.log4j.DailyRollingFileAppender(每天产生一个日志文件), -->
+	<!-- org.apache.log4j.RollingFileAppender(文件大小到达指定尺寸的时候产生一个新的文件), -->
+	<!-- org.apache.log4j.WriterAppender(将日志信息以流格式发送到任意指定的地方) -->
+	<!-- ========================================================================== -->
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="COMMON_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/common/common.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="QUARTZ_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/quartz/quartz.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="XML_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/xml/xml.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="HEBAO_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/hebao/hebao.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="CHENGBAO_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/chengbao/chengbao.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="BUY_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/buy/buy.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="SSDK_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/ssdk/ssdk.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="SSDK_CHECK_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/ssdk/ssdk_check.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="TASK_MONITOR" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/task/monitor.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="TASK_SSDK_SIGN_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/task/ssdk_sign.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="TASK_CANCEL_POLICY_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/task/cancel_policy.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="TASK_CHENGBAO_SIGN_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/task/chengbao_sign.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+<appender name="TONGDUN_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/tongdun/tongdun.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+	<appender name="EMAIL_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/email/email.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="WXUTIL_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/wxUtil/wxUtil.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+
+	<appender name="QUOTE_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/quote/quote.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+	<appender name="CUSTOMER_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/customer/customer.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<appender name="PASSWORDFORGET_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/customer/passwordForget.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<!--allInEdor 新增日志配置项 -->
+	<appender name="AI_EDOR_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/ai/edor.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<!-- AI EDOR MESSAGE FILE -->
+		<appender name="AI_EDOR_MESSAGE_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/ai/edor_message.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyy-MM-dd HH:mm:ss.SSS}][%r][%p]-[%m]%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<!-- AI_ELEC_FILE（电子函件） -->
+	<appender name="AI_ELEC_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/ai/elec.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyy-MM-dd HH:mm:ss.SSS}][%r][%p]-[%m]%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+	<!-- AI_REINSTATEMENT_FILE（保单复效） -->
+	<appender name="AI_REINSTATEMENT_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/ai/reinstate.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyy-MM-dd HH:mm:ss.SSS}][%r][%p]-[%m]%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+	<!-- VALIDITY_UPDATE（证件有效期更新） 1826-->
+	<appender name="VALIDITY_RENEWAL" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/validity/certValidity.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyy-MM-dd HH:mm:ss.SSS}][%r][%p]-[%m]%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+	<!-- AI_RENEWAL_FILE（保单续期） 435-->
+	<appender name="AI_RENEWAL_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/opt/tomcat-8080-7.0.69/mobileLog/ai/renewal.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyy-MM-dd HH:mm:ss.SSS}][%r][%p]-[%m]%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<!--通过<logger></logger>的定义可以将各个包中的类日志输出到不同的日志文件中 -->
+
+	<!-- quartz 日志监控 -->
+	<logger name="org.quartz">
+		<appender-ref ref="QUARTZ_FILE" />
+	</logger>
+
+	<!-- xml 日志监控 -->
+	<logger name="xml_file">
+		<appender-ref ref="XML_FILE" />
+	</logger>
+
+	<!-- 核保 日志监控 -->
+	<logger name="hebao_file">
+		<appender-ref ref="HEBAO_FILE" />
+	</logger>
+
+	<!-- 承保 日志监控 -->
+	<logger name="chengbao_file">
+		<appender-ref ref="CHENGBAO_FILE" />
+	</logger>
+
+	<!-- 投保过程 日志监控 -->
+	<logger name="buy_file">
+		<appender-ref ref="BUY_FILE" />
+	</logger>
+      <!-- 同盾 日志监控 -->
+	<logger name="tongdun_file">
+		<appender-ref ref="TONGDUN_FILE" />
+	</logger>
+	<!-- 实时代扣 日志监控 -->
+	<logger name="ssdk_file">
+		<appender-ref ref="SSDK_FILE" />
+	</logger>
+
+	<!-- 实时代扣对账 日志监控 -->
+	<logger name="ssdk_check_file">
+		<appender-ref ref="SSDK_CHECK_FILE" />
+	</logger>
+
+	<!-- 跑批 日志监控 -->
+	<logger name="task_monitor">
+		<appender-ref ref="TASK_MONITOR" />
+	</logger>
+
+	<!-- 实时代扣异步签单跑批 日志监控 -->
+	<logger name="task_ssdk_sign_file">
+		<appender-ref ref="TASK_SSDK_SIGN_FILE" />
+	</logger>
+
+	<!-- 撤单跑批 日志监控 -->
+	<logger name="task_cancel_policy_file">
+		<appender-ref ref="TASK_CANCEL_POLICY_FILE" />
+	</logger>
+
+	<!-- 同步承保异步签单跑批 日志监控 -->
+	<logger name="task_chengbao_sign_file">
+		<appender-ref ref="TASK_CHENGBAO_SIGN_FILE" />
+	</logger>
+
+	<!-- 邮件发送 日志监控 -->
+	<logger name="email_file">
+		<appender-ref ref="EMAIL_FILE" />
+	</logger>
+
+	<!-- wxUtil日志监控 -->
+	<logger name="wxutil_file">
+		<appender-ref ref="WXUTIL_FILE" />
+	</logger>
+
+	<logger name="quote_file">
+		<appender-ref ref="QUOTE_FILE" />
+	</logger>
+	<!-- customer日志监控 -->
+	<logger name="customer_file">
+		<appender-ref ref="CUSTOMER_FILE" />
+	</logger>
+	<!-- passwordForget日志监控 -->
+	<logger name="passwordForget_file">
+		<appender-ref ref="PASSWORDFORGET_FILE" />
+	</logger>
+
+	<!--allInEdor aiEdor 受理资料上传 日志监控 -->
+	<logger name="ai_edor_file">
+		<appender-ref ref="AI_EDOR_FILE" />
+	</logger>
+	<!-- allInEdorMessage 受理资料上传报文输出-->
+	<logger name="ai_edor_messge_file">
+		<appender-ref ref="AI_EDOR_MESSAGE_FILE" />
+	</logger>
+	<!-- allin_Elec 电子函件日志监控 -->
+	<logger name="ai_elec_file">
+		<appender-ref ref="AI_ELEC_FILE" />
+	</logger>
+	<!--allInEdor aiEdor 保单复效 日志监控 -->
+	<logger name="ai_reinstatement_file">
+		<appender-ref ref="AI_REINSTATEMENT_FILE" />
+	</logger>
+	<!--续期 日志监控 435  -->
+	<logger name="ai_renewal_file">
+		<appender-ref ref="AI_RENEWAL_FILE" />
+	</logger>
+	<!-- 证件有效期更新日志监控1826 -->
+	<logger name="validity_renewal">
+		<appender-ref ref = "VALIDITY_RENEWAL" />
+	</logger>
+	<root>
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="COMMON_FILE" />
+	</root>
+
+</log4j:configuration>
