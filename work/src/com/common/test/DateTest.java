@@ -1,4 +1,4 @@
-package com.common.util;
+package com.common.test;
 
 public class DateTest {
 }

@@ -1,4 +1,4 @@
-package com.common;
+package com.common.util;
 
 import javax.crypto.*;
 import javax.crypto.spec.DESedeKeySpec;

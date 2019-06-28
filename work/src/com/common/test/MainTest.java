@@ -1,4 +1,4 @@
-package com.common;
+package com.common.test;
 
 /**
  * @author quanzhengzheng
