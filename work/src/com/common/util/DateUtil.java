@@ -12,7 +12,7 @@ public class DateUtil extends Log4jKit {
     // 继承Log4jKit，以后就不用每个类都写一遍Logger.getLogger
 //    private static Logger logger = Logger.getLogger(DateUtil.class);
     public static void main(String[] args) {
-        info("ddddddd");
+        info("");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         simpleDateFormat.format(date);
