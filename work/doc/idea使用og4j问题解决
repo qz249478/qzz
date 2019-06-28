@@ -1,0 +1,5 @@
+1、报错如下
+   log4j:WARN No appenders could be found for logger (com.netease.qa.testng.TestngRetry).
+   log4j:WARN Please initialize the log4j system properly.
+原因是：没有对log4j这个jar进行文件配置。
+方案：将log4j.properties文件放在src目录下就可以了。

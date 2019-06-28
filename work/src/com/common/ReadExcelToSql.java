@@ -24,11 +24,11 @@ public final class ReadExcelToSql {
     /**
      * 需要转换的Excel。
      */
-    private static final  String XLS_FILE = "f:\\短信参数.xls";
+    private static final  String XLS_FILE = "f:\\DATA-8662.xls";
     /**
      * 生成的sql文件
      */
-    private static final  String SQL_FILE = "f:\\20190326-quanzhengzheng-（DATA-8021）-DML-02.sql";
+    private static final  String SQL_FILE = "f:\\DATA-8662-DML-04.sql";
     /**
      *
      */
@@ -56,29 +56,101 @@ public final class ReadExcelToSql {
 
     /**
      *  主程序运行入口
-     * @throws Exception if anything can't be written.
      */
-    public void run() throws Exception {
+    public void run() {
         logger.info("ReadExcelToSql run() start ...");
 
-        HSSFSheet sheet = checkFile();
-        int rowAll = 0;
-        if (sheet != null) {
-            //获取行数
-            rowAll = sheet.getLastRowNum();
+        HSSFSheet sheet ;
+        try {
+            sheet = checkFile();
+            int rowAll = 0;
+            if (sheet != null) {
+                //获取行数
+                rowAll = sheet.getLastRowNum();
+            }
+            //查询险种配置
+            String createSmsType = "0";
+            String selectRiskConfig = "1";
+            if (createSmsType.equals(sqlType)) {
+                createSms(sheet, rowAll);
+            } else if (selectRiskConfig.equals(sqlType)) {
+                selectRiskConfig(sheet, rowAll);
+            } else if ("4".equals(sqlType)) {
+                createSel(sheet, rowAll);
+            } else {
+                createRiskConfig(sheet, rowAll);
+            }
+
+        } catch (Exception e) {
+            logger.info("ReadExcelToSql run() end ..." , e);
         }
-        //查询险种配置
-        String createSmsType = "0";
-        String selectRiskConfig = "1";
-        if (createSmsType.equals(sqlType)) {
-            createSms(sheet, rowAll);
-        } else if (selectRiskConfig.equals(sqlType)) {
-            selectRiskConfig(sheet, rowAll);
-        } else {
-            createRiskConfig(sheet, rowAll);
+    }
+
+    /**
+     * @Description 生成核心客户号查询的二维sql
+     * @param sheet
+     * @param rowAll
+     */
+    private void createSel(HSSFSheet sheet, int rowAll) {
+        logger.info("createSel 开始、、、");
+        int num = 0;
+        try {
+            for (int i = 1; i <= rowAll; i++) {
+                num = i;
+                HSSFRow row = sheet.getRow(i);
+                if (row == null) {
+                    continue;
+                }
+                /*row.getCell(6).setCellType(CellType.STRING);
+                if ("#N/A".equals(row.getCell(6).getStringCellValue())) {
+                    continue;
+                }*/
+                //姓名
+                row.getCell(1).setCellType(CellType.STRING);
+                String name = row.getCell(1).getStringCellValue();
+                //性别
+                row.getCell(2).setCellType(CellType.STRING);
+                String sex = row.getCell(2).getStringCellValue();
+                //证件类型
+                row.getCell(3).setCellType(CellType.STRING);
+                String idType = row.getCell(3).getStringCellValue();
+                //证件号码
+                row.getCell(0).setCellType(CellType.STRING);
+                String idNo = row.getCell(0).getStringCellValue();
+                //出生日期
+                row.getCell(4).setCellType(CellType.STRING);
+                String birthday = row.getCell(4).getStringCellValue();
+                //核心客户号
+//                String coreCustNo = row.getCell(6).getStringCellValue();
+                //客户号
+                /*row.getCell(5).setCellType(CellType.STRING);
+                String customerNo = row.getCell(5).getStringCellValue();*/
+
+                StringBuilder insSql = new StringBuilder();
+                insSql.append("('")
+                        .append(name).append("', '")
+                        .append(idType).append("', '")
+                        .append(sex).append("', '")
+                        .append(idNo).append("', date'")
+                        .append(birthday).append("' ),\n");
+                content.append(insSql);
+                //update eccustomer set coreCustNo = '' where customerNo = '';
+                /*insSql.append("update eccustomer set coreCustNo = '")
+                        .append(coreCustNo).append("' where customerNo = '")
+                        .append(customerNo).append("';\n");
+                content.append(insSql);*/
+                /*insSql.append("or idno = '").append(idNo).append("' \n");
+                content.append(insSql);*/
+            }
+
+            FileUtils.writeStringToFile(fileResulet, content.toString(), "UTF-8");
+
+        } catch (Exception e) {
+            logger.info("异常行数" + num);
+            e.printStackTrace();
         }
 
-        logger.info("ReadExcelToSql run() end ...");
+        logger.info("createSel 结束、、、");
     }
 
     /**
@@ -89,33 +161,35 @@ public final class ReadExcelToSql {
     private void createRiskConfig(final HSSFSheet sheet, final  int rowAll) {
         logger.info("createRiskConfig start ...");
 
-        for (int i = 1; i <= rowAll; i++) {
-            HSSFRow row = sheet.getRow(i);
-            if (row == null) {
-                continue;
-            }
-            //销售方式
-            row.getCell(4).setCellType(CellType.STRING);
-            String selltype = row.getCell(4).getStringCellValue();
-            //销售渠道
-            row.getCell(2).setCellType(CellType.STRING);
-            String salechnl = row.getCell(2).getStringCellValue();
-            //险种
-            row.getCell(0).setCellType(CellType.STRING);
-            String riskcode = row.getCell(0).getStringCellValue();
-
-            StringBuilder insSql = new StringBuilder();
-            insSql.append("insert into `lp_config_new` (`salechnl`, `selltype`, `riskCode`, `item`, `agentCom`,`raisePlan`, `extends1`, `extends2`, `makeDate`, `lastModifyDate`) \n values('")
-                    .append(salechnl).append("','")
-                    .append(selltype).append("','")
-                    .append(riskcode).append("','PC',NULL,NULL,NULL,NULL,now(),now());\n");
-            content.append(insSql);
-        }
         try {
+            for (int i = 1; i <= rowAll; i++) {
+                HSSFRow row = sheet.getRow(i);
+                if (row == null) {
+                    continue;
+                }
+                //销售方式
+                row.getCell(4).setCellType(CellType.STRING);
+                String selltype = row.getCell(4).getStringCellValue();
+                //销售渠道
+                row.getCell(2).setCellType(CellType.STRING);
+                String salechnl = row.getCell(2).getStringCellValue();
+                //险种
+                row.getCell(0).setCellType(CellType.STRING);
+                String riskcode = row.getCell(0).getStringCellValue();
+
+                StringBuilder insSql = new StringBuilder();
+                insSql.append("insert into `lp_config_new` (`salechnl`, `selltype`, `riskCode`, `item`, `agentCom`,`raisePlan`, `extends1`, `extends2`, `makeDate`, `lastModifyDate`) \n values('")
+                        .append(salechnl).append("','")
+                        .append(selltype).append("','")
+                        .append(riskcode).append("','PC',NULL,NULL,NULL,NULL,now(),now());\n");
+                content.append(insSql);
+            }
+
             FileUtils.writeStringToFile(fileResulet, content.toString(), "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         logger.info("createRiskConfig end ...");
     }
@@ -156,86 +230,59 @@ public final class ReadExcelToSql {
     private void createSms(final HSSFSheet sheet, final  int rowAll) {
         logger.info("createSms() start ...");
 
-        String insert = "insert into sms_main (`sms_no`, `mobile`, `sms_text`, `status`, `should_send_date`, `should_send_time`,`source`, `create_date`, `create_time`, `generate_datetime`, `classify`, `template`)\n";
+        try {
+            String insert = "insert into sms_main (`sms_no`, `mobile`, `sms_text`, `status`, `should_send_date`, `should_send_time`,`source`, `create_date`, `create_time`, `generate_datetime`, `classify`, `template`)\n";
 
-        for (int i = 1; i <= rowAll; i++) {
-            HSSFRow row = sheet.getRow(i);
-            if (row == null) {
-                continue;
+            for (int i = 1; i <= rowAll; i++) {
+                HSSFRow row = sheet.getRow(i);
+                if (row == null) {
+                    continue;
+                }
+                //短信设置发送时间
+                String shouldSendDate = "2019-05-13";
+                String shouldSendTime = "18:15:00";
+                //序号 自动生成
+                String smsNo = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+                //手机号
+                row.getCell(4).setCellType(CellType.STRING);
+                String mobile = row.getCell(4).getStringCellValue();
+                //投保人姓名
+                row.getCell(8).setCellType(CellType.STRING);
+                String appntName = row.getCell(8).getStringCellValue();
+                //先生/女士
+                row.getCell(9).setCellType(CellType.STRING);
+                String appntSex = row.getCell(9).getStringCellValue();
+                //if ("女".equals(appntSex)) {
+                //    appntSex = "女士";
+                //} else if ("男".equals(appntSex)) {
+                //    appntSex = "先生";
+                //} else {
+                //    System.out.println("性别怪异");
+                //}
+                //险种名称（如有主险和附加险，只展示主险名称即可）
+                row.getCell(10).setCellType(CellType.STRING);
+                String riskName = row.getCell(10).getStringCellValue();
+
+                row.getCell(11).setCellType(CellType.STRING);
+                String path = row.getCell(11).getStringCellValue();
+
+                row.getCell(12).setCellType(CellType.STRING);
+                String contno = row.getCell(12).getStringCellValue();
+
+                //SM010202
+                String smsText =  "尊敬的" + appntName + appntSex +  "，您购买的" + riskName + "电子保单"
+                        +  path + "已生成，请及时下载阅读合同条款，并点击智能回访" + contno + "参与权益确认。更多服务请关注我公司官网、官微或拨打全国统一客服热线4008500365，感谢支持！";
+
+                String values = "values('" + smsNo + "','" + mobile + "','" + smsText + "','1', '" + shouldSendDate + "', '" + shouldSendTime + "', '99',curdate(),curtime(), now(), 'C00002', 'SM010198');\n";
+                content.append(insert).append(values);
             }
-            System.out.println("开始转换第" + i + "行");
-            //短信设置发送时间
-            String shouldSendDate = "2019-03-26";
-            String shouldSendTime = "15:15:00";
-            //序号 自动生成
-            String smsNo = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-            //手机号
-            row.getCell(2).setCellType(CellType.STRING);
-            String mobile = row.getCell(2).getStringCellValue();
-            //投保人姓名
-            row.getCell(4).setCellType(CellType.STRING);
-            String appntName = row.getCell(4).getStringCellValue();
-            //先生/女士
-            row.getCell(5).setCellType(CellType.STRING);
-            String appntSex = row.getCell(5).getStringCellValue();
-            //if ("女".equals(appntSex)) {
-            //    appntSex = "女士";
-            //} else if ("男".equals(appntSex)) {
-            //    appntSex = "先生";
-            //} else {
-            //    System.out.println("性别怪异");
-            //}
-            //险种名称（如有主险和附加险，只展示主险名称即可）
-            String riskName = row.getCell(7).getStringCellValue();
-            //String insuredName = row.getCell('3').getStringCellValue();
-            // 购买渠道
-            /*String salechnl = row.getCell(6).getStringCellValue();
-            //购买日期
-            String paymentdate = row.getCell(8).getStringCellValue();
-            //保单号
-            String contNo = row.getCell(9).getStringCellValue();
-            //保险期间
-            String insuyear = row.getCell(10).getStringCellValue();
-            //缴费期间
-            String paydate = row.getCell(11).getStringCellValue();
-            //缴费方式
-            String paymentfrequencytype = "";
-            //保费
-            String premium = row.getCell(12).getStringCellValue();
-            // 犹豫期起始日期
-            String wtdatystartdate = row.getCell(13).getStringCellValue();
-            // 犹豫期止期
-            String wtdatyenddate = row.getCell(14).getStringCellValue();*/
 
-            String AGENTNAME = row.getCell(3).getStringCellValue();
-            String HOLDERNAME = row.getCell(4).getStringCellValue();
-            String AGENCYNAME = row.getCell(5).getStringCellValue();
-            String PRODUCTNAME = row.getCell(6).getStringCellValue();
-            String CONTNO = row.getCell(7).getStringCellValue();
-            String INSUYEAR = row.getCell(8).getStringCellValue();
-            String PAYDATE = row.getCell(9).getStringCellValue();
-            String PRESERVATIONAMOUNT = row.getCell(10).getStringCellValue();
-            //SM010202
-            String smsText = AGENTNAME + "伙伴，您好！客户" + HOLDERNAME + "在" + AGENCYNAME + "投保的" +
-                    PRODUCTNAME + "已退保，保单尾号" + CONTNO + "，保险期间" + INSUYEAR + "，交费期间" +
-                    PAYDATE + "，共计" + PRESERVATIONAMOUNT + "元，请关注！";
-            //SM010148
-            //String smsText = "尊敬的" + appntName + appntSex + "，您" + salechnl + "购买的" + riskName + "已于" + paymentdate +
-            //        "成功缴纳首期保费并承保，保单号：" + contNo + "，保险期间" + insuyear + "，交费期间" + paydate + "，" +
-            //        paymentfrequencytype + "保费" + premium + "元，犹豫期自" + wtdatystartdate + "至" + wtdatyenddate +
-            //        "，请您关注“弘康人寿”官方微信或登录www.hongkang-life.com查询保单，并仔细阅读保险合同条款，详询4008500365。 \n";
-
-            //String smsText = "尊敬的" + appntName + appntSex + "：您好！您在我司为" + insuredName + "购买的"
-            //        + riskName + "，保障截止日期为" + "2020/2/24" + "，根据公司规划，该产品已于2019年2月28日18时停售，停售后到期的保单将无法再次续保。为不影响您的保障规划，您可关注弘康人寿微信公众号，提前选择其它保障产品。感谢您的支持，详询4008500365！";
-            String values = "values('" + smsNo + "','" + mobile + "','" + smsText + "','1', '" + shouldSendDate + "', '" + shouldSendTime + "', '99',curdate(),curtime(), now(), 'C00002', 'SM010202');\n";
-            content.append(insert).append(values);
+            FileUtils.writeStringToFile(fileResulet, content.toString(), "UTF-8");
+            } catch (Exception e) {
+            logger.info("createSms() end ...",e );
         }
-            try {
-                FileUtils.writeStringToFile(fileResulet, content.toString(), "UTF-8");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        logger.info("createSms() end ...");
+
+
     }
 
     /**
@@ -286,7 +333,7 @@ public final class ReadExcelToSql {
      *
      */
     public static void main(final String[] args) {
-        ReadExcelToSql readXls2SqlThread = new ReadExcelToSql("0");
+        ReadExcelToSql readXls2SqlThread = new ReadExcelToSql("4");
         try {
             readXls2SqlThread.run();
         } catch (Exception e) {

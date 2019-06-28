@@ -15,11 +15,13 @@ public class AsyncTaskHandlerTask {
     Logger logger = Logger.getLogger(AsyncTaskHandlerTask.class);
     @Scheduled(fixedDelay = 1000)
     public void task1() {
+
         logger.info("task1");
     }
 
     @Scheduled(fixedDelay = 1000)
     public void task2() {
+
         logger.info("task2");
     }
 }
