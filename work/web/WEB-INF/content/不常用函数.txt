@@ -1,0 +1,41 @@
+package com.common;
+
+public class 不常用函数 {
+	
+	String sql = "";
+	String mysql = "";
+	
+	@SuppressWarnings("unused")
+	private void 函数() {
+		//绝对值
+		sql= "select abs(-1) value from dual";
+		mysql = "";
+		//取整(大) 
+		sql = "select ceil(-1.001) value from dual";
+		//取整(小)
+		sql = "select floor(-1.001) value from dual";
+		//取整（截取)
+		sql = "select trunc(-1.002) value from dual";
+		//四舍五入
+		sql = "select round(1.23456,4) value from dual 1.2346";
+		//e为底的幂 
+		sql = "select Exp(1) value from dual 2.71828182";
+		//取e为底的对数
+		sql = "select ln(2.7182818284590451) value from dual";
+		//取10为底对数
+		sql = "select log(10,10) value from dual";
+		//取平方
+		sql = "select power(4,2) value from dual 16";
+		//取平方根
+		sql = "select SQRT(4) value from dual 2";
+		//求任意数为底的幂
+		sql = "select power(3,4) value from dual 81";
+		//取随机数
+		sql = "select sys.dbms_random.value(0,1) value from dual";
+		//取符号
+		sql = "select sign(-8) value from dual -1";
+		//null值处理
+		sql = "select nvl(null,10) value from dual";
+		mysql = "select F1,IsNull(F2,10) value from Tbl";
+	}
+}

@@ -1,0 +1,19 @@
+关于IDEA不能实时编译的一个问题
+但是貌似还是没有解决方案
+可以（ctrl+s和ctrl+F9）进行保存和编译，但是。。。2个按键你懂得。。太麻烦了
+首先是我想找的是自动编译，所以发现了idea 12 的一个新特性，make project automatically
+在stackoverflow 发现的解决方案: http://stackoverflow.com/questions/14635602/intellij-make-project-automatically-woes
+IDEA中有录制宏的功能，只要我们录制一个宏，内容是ctrl+s和ctrl+F9，然后在快捷键(keymap)中将宏的快捷键设置成ctrl+s即可实现我们的需求
+
+1、Edit-Macros-Start Macros Recodring
+   点击之后这时会在右下角出现一个绿色的小框框和状态条
+   这时我们就可以开始录制啦，先按下快捷键 ctrl+s 然后按下快捷键 ctrl+F9
+2、操作做完之后我们可以停止录制保存宏，你既可以点击右下角的红色按钮
+   也可以回到菜单点击  stop Macro Recording，停止录制之后我们要给他一个名称，让他保存到配置里面去，
+   就像这样，我给的是 auto make,或者 可以是 save and make 这样符合我们的操作一点
+   点击OK保存后，我们可以到设置面板的快捷键设置里面(keymap)设置宏的快捷键
+3、File-Setting-keymap-Macros
+   在keymap设置中，我们选择Macros设置，也就是宏设置，点击展开后，你可以看到我们刚刚录制的宏"auto make" ,
+   这时右键单机选择 "add keyboard Shortcut" 为我们的宏设置快捷键,我们按下Ctrl+S设置快捷键，这时下面会出现一个红色的警告，
+   告诉我们这个快捷键已经被save All这个操作占用了，但是不用管，直接点OK保存
+4、可以了。赶紧去试试吧

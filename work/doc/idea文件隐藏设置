@@ -1,0 +1,3 @@
+.iml是 intellij idea的工程配置文件，里面是当前project的一些配置信息。
+.Idea存放项目的配置信息，包括历史记录，版本控制信息等。其实可以不用理它。
+我们可以配置隐藏。点击file->Settings->File types,在右下角的Ignore files and folders中可以将.idea隐藏，*.iml文件隐藏

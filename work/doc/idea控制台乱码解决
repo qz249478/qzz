@@ -1,0 +1,29 @@
+控制台输出乱码方案解决
+1、idea配置文件中增加配置
+   打开Intellij的安装的bin目录（D:\Program Files\JetBrains\IntelliJ IDEA 14.0\bin ），
+   找到上图的两个文件idea64.exe.vmoptions（64位的配置文件）[idea.exe.vmoptions 32位的]，
+   在配置文件中添加：
+   -Dfile.encoding=UTF-8
+2、配置项目编码及IDE编码
+   File->settings->File Encodings
+   把IDE Encoding和Project Encoding配置为UTF-8，
+   同时将下面的Default encoding for properties files也配置为UTF-8
+3、配置项目启动服务器参数，在tomcat配置中 在VM options 项中添加
+   -Dfile.encoding=UTF-8
+4、tomcat输出到控制台（console）出现中文乱码，设置Run/Debug Configuration中设置environment variables 来解决。
+   Idea=>Run=>Edit Configuration，弹出的对话框中，在Startup/Connection 中Run中添加environment variables
+   JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+
+[5].maven构建的项目还需要如下操作
+  由于idea中maven的配置优先，需要在pom.xml中对maven-surefire-plugin进行配置。
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12.4</version>
+        <configuration>
+          <forkMode>once</forkMode>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+        </configuration>
+      </plugin>
+    </plugins>
