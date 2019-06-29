@@ -1,40 +1,40 @@
 package com.common;
 
-public class ²»³£ÓÃº¯Êı {
-	
+public class ä¸å¸¸ç”¨å‡½æ•° {
+
 	String sql = "";
 	String mysql = "";
-	
+
 	@SuppressWarnings("unused")
-	private void º¯Êı() {
-		//¾ø¶ÔÖµ
+	private void å‡½æ•°() {
+		//ç»å¯¹å€¼
 		sql= "select abs(-1) value from dual";
 		mysql = "";
-		//È¡Õû(´ó) 
+		//å–æ•´(å¤§)
 		sql = "select ceil(-1.001) value from dual";
-		//È¡Õû(Ğ¡)
+		//å–æ•´(å°)
 		sql = "select floor(-1.001) value from dual";
-		//È¡Õû£¨½ØÈ¡)
+		//å–æ•´ï¼ˆæˆªå–)
 		sql = "select trunc(-1.002) value from dual";
-		//ËÄÉáÎåÈë
+		//å››èˆäº”å…¥
 		sql = "select round(1.23456,4) value from dual 1.2346";
-		//eÎªµ×µÄÃİ 
+		//eä¸ºåº•çš„å¹‚
 		sql = "select Exp(1) value from dual 2.71828182";
-		//È¡eÎªµ×µÄ¶ÔÊı
+		//å–eä¸ºåº•çš„å¯¹æ•°
 		sql = "select ln(2.7182818284590451) value from dual";
-		//È¡10Îªµ×¶ÔÊı
+		//å–10ä¸ºåº•å¯¹æ•°
 		sql = "select log(10,10) value from dual";
-		//È¡Æ½·½
+		//å–å¹³æ–¹
 		sql = "select power(4,2) value from dual 16";
-		//È¡Æ½·½¸ù
+		//å–å¹³æ–¹æ ¹
 		sql = "select SQRT(4) value from dual 2";
-		//ÇóÈÎÒâÊıÎªµ×µÄÃİ
+		//æ±‚ä»»æ„æ•°ä¸ºåº•çš„å¹‚
 		sql = "select power(3,4) value from dual 81";
-		//È¡Ëæ»úÊı
+		//å–éšæœºæ•°
 		sql = "select sys.dbms_random.value(0,1) value from dual";
-		//È¡·ûºÅ
+		//å–ç¬¦å·
 		sql = "select sign(-8) value from dual -1";
-		//nullÖµ´¦Àí
+		//nullå€¼å¤„ç†
 		sql = "select nvl(null,10) value from dual";
 		mysql = "select F1,IsNull(F2,10) value from Tbl";
 	}
