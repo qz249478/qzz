@@ -1,4 +1,4 @@
-package com.common.util;
+package com.common.util.encry;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;

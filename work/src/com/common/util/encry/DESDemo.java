@@ -1,5 +1,7 @@
-package com.common.util;
+package com.common.util.encry;
 
+import com.common.util.encry.cipher.hex;
+import com.common.util.security.convertKey;
 import org.apache.log4j.Logger;
 
 import javax.crypto.Cipher;
@@ -8,45 +10,45 @@ import java.security.Key;
 
 /**
  * @author quanzhengzheng
- * @author 2019-06-12
+ * @date  2019-06-12
  * @Description DES加解密
- * DES算是发明最早的最广泛使用的分组对称加密算法，其全程是Data Encryption Standard，
- * 它需要三个参数来完成加解密的工作，分别是Key、Data以及Mode，其中Key是加密密钥（因为DES是一种对称加密算法，
- * 所以解密的密钥也是它了），Data是待加密或解密的数据，Mode则用来指定到底是加密还是解密
+ * <p>DES算是发明最早的最广泛使用的分组对称加密算法，
+ * 其全程是Data Encryption Standard，它需要三个参数来完成加解密的工作，
+ * 分别是Key、Data以及Mode，其中Key是加密密钥（因为DES是一种对称加密算法，
+ * 所以解密的密钥也是它了），Data是待加密或解密的数据，
+ * Mode则用来指定到底是加密还是解密
  */
 public class DESDemo {
 
     private static Cipher cipher = null;
-    private static String testCode = "86110020190210056845";
-    private static String testkey = "taobao20130121Yeswecan";
+    private static String testCode = "86110020190210056997";
+    private static String testkey = "taobao20130121yeswecan";
     private static String testEnCode = "19576E8EB938228B";
     private static Logger logger = Logger.getLogger(DESDemo.class);
 
     /**
      * @Description  数据加密
-     * @param key 密钥
-     * @param code 需要加密的字符串
-     * @return
+     * @param   key 密钥
+     * @param   code 需要加密的字符串
+     * @return  desCode 加密后的字符串
      */
     private static String desCode(String code,String key) {
         logger.info("加密开始");
         String desCode = "";
         try {
-            Key k = hex.convertSecretKey(key);
+            //密钥转换
+            Key k = convertKey.convertSecretKey(key);
+            //Cipher对象实际完成加密操作
             cipher = Cipher.getInstance("DES");
+            //用密匙初始化Cipher对象
             cipher.init(Cipher.ENCRYPT_MODE,k);
+            //正式执行加密操作，获取加密结果desCodeResult
             byte[] desCodeResult = cipher.doFinal(code.getBytes("UTF-8"));
-        //   System.out.println("DESEncode :" + Hex.toHexString(encodeResult));
+            //System.out.println("DESEncode :" + Hex.toHexString(encodeResult));
+             /*DES加密之后总会产生乱码，迫不得已用 BASE64 再包一层。但还是会产生像 “+”
+             什么的字符，这些字符在某些浏览器上会被屏蔽。只得再 URLDecode一下*/
             desCode = URLEncoder.encode(hex.parseByte2HexStr(desCodeResult),"UTF-8");
             logger.info("加密后的字符串desCode " + desCode);
-
-
-            /*URLEncoder.encode(
-                    hex.parseByte2HexStr(
-                            CryptUtil.DES.encrypt(
-                                    code.getBytes("UTF-8"),
-                                    key)),
-                    "UTF-8");*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,13 +60,18 @@ public class DESDemo {
      * @Description 解密方法
      * @param code 需要解密的字符串
      * @param key 密钥
+     * @return enCode 解密后的字符串
      */
     private static String desEnCode(String code, String key) {
         logger.info("desEnCode 解密开始");
         String enCode = "";
         try {
+            Key k = convertKey.convertSecretKey(key);
+            //Cipher对象实际完成加密操作
             cipher = Cipher.getInstance("DES");
-            cipher.init(Cipher.DECRYPT_MODE, hex.convertSecretKey(key));
+            //用密匙初始化Cipher对象
+            cipher.init(Cipher.DECRYPT_MODE,k);
+            //正式进入加密，并返回加密后的二进制数组
             byte[] DecodeResult = cipher.doFinal(hex.parseHexStr2Byte(URLEncoder.encode(code,"UTF-8")));
             enCode = new String(DecodeResult);
             logger.info("解密后的字符串enCode " + enCode);

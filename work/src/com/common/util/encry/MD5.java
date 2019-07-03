@@ -1,4 +1,4 @@
-package com.common.util;
+package com.common.util.encry;
 
 import org.apache.commons.codec.digest.DigestUtils;
 

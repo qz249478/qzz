@@ -1,0 +1,105 @@
+git rm -r --cached .idea  #--cached不会把本地的.idea删除
+git commit -m "delete .idea dir"
+git push -u origin master
+1、gitignore规则不生效
+.gitignore只能忽略那些原来没有被track的文件，如果某些文件已经被纳入了版本管理中，
+则修改.gitignore是无效的。
+解决方法就是先把本地缓存删除（改变成未track状态），然后再提交:
+git rm -r --cached .
+git add .
+git commit -m 'update .gitignore'
+2、git忽略某个指定的文件(不从版本库中删除)
+执行命令如下：
+git update-index --assume-unchanged config.conf
+用git status查看一下，已经得到了自己想要的效果
+3、git取消忽略某个指定的文件
+git update-index --no-assume-unchanged config.conf
+4、将当前版本回退到上一个版本，命令如下：
+git reset --hard HEAD^
+5、 回退到上两个版本
+git reset – hard HEAD^^
+6、回退到指定版本
+git log //显示从最近到最远的提交日志
+git reset --hard commit_id //回退到指定版本
+7、查看命令历史
+git reflog
+8、拉取暂存区文件并将其替换成工作区文件
+gitcheckout-- <file>
+9、跟踪取消，即把文件从git中拿出来，不再进行版本跟踪，但保留工作区的文件。
+git rm - - cached filename
+10、查看工作区和版本库里面最新版本的区别
+git diff HEAD – readme.txt
+git diff命令比较的是工作目录中当前文件与暂存区快照之间的差异，也就是修改之后还没有暂存起来的变化内容
+11、将工作去的内容放入版本库的暂存区
+git add readme.txt
+12、将暂存区的内容提交到当前分支
+git commit -m "git tracks changes"
+13、显示工作目录和暂存区的状态
+git status
+14、删除一个文件
+git rm test.txt
+15、从远程库克隆项目
+git clone 项目地址
+16、创建分支，然后切换到分支
+git checkout -b dev
+git checkout命令加上-b参数表示创建并切换，相当于以下两条命令：
+git branch dev
+git checkout dev
+17、查看当前分支
+git branch
+git branch命令会列出所有分支，当前分支前面会标一个*号
+18、git merge命令用于合并指定分支到当前分支
+git merge dev
+19、删除本地分支
+git branch -d dev
+20、删除远程dev分支
+git push origin :dev
+21、切换分支
+git checkout <name>
+22、查看远程库的信息
+git remote 或 git remote -v
+23、推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
+git push origin master
+如果要推送其他分支，比如dev，就改成：
+git push origin dev
+24、拉取分支
+git pull
+
+1、git基本命令
+1）git add 将想要快照的内容写入缓存区
+2）git status -s "AM" 状态的意思是，这个文件在我们将它添加到缓存之后又有改动
+3）git commit -m '第一次版本提交' -m选项添加备注信息
+4）git clone url 使用 git clone 拷贝一个 Git 仓库到本地
+5）git diff 查看执行 git status 的结果的详细信息
+　　尚未缓存的改动：git diff
+　　查看已缓存的改动： git diff --cached
+　　查看已缓存的与未缓存的所有改动：git diff HEAD
+　　显示摘要而非整个 diff：git diff --stat
+6）git commit -a 跳过git add 提交缓存的流程
+7）git reset HEAD 用于取消已缓存的内容
+8）git rm file
+　　git rm 会将条目从缓存区中移除。这与 git reset HEAD 将条目取消缓存是有区别的。
+　　"取消缓存"的意思就是将缓存区恢复为我们做出修改之前的样子。
+　　默认情况下，git rm file 会将文件从缓存区和你的硬盘中（工作目录）删除。
+9）git mv 重命名磁盘上的文件 如 git mv README README.md
+10）git push -u origin master 提交代码
+2、git 分支管理
+1）创建分支命令 git branch (branchname) 列出分支 git branch
+2）切换分支命令 git checkout (branchname)
+3）合并分支 git merge (branchname)
+4）创建新分支并立即切换到该分支下 git checkout -b (branchname)
+5）删除分支命令 git branch -d (branchname)
+ps:状态 uu 表示冲突未解决 可以用 git add 要告诉 Git 文件冲突已经解决
+3、查看日志版本
+git log 命令列出历史提交记录
+git log --oneline 查看历史记录的简洁的版本
+git log --oneline --graph 查看历史中什么时候出现了分支、合并
+4、标签
+为软件发布创建标签是推荐的。这个概念早已存在，在 SVN 中也有。你可以执行如下命令创建一个叫做 1.0.0 的标签：
+git tag 1.0.0 1b2e1d63ff
+1b2e1d63ff 是你想要标记的提交 ID 的前 10 位字符。可以使用下列命令获取提交 ID：
+git log
+你也可以使用少一点的提交 ID 前几位，只要它的指向具有唯一性
+5、提取远程仓库代码
+1）git fetch　　从远程仓库下载新分支与数据
+2)）git pull　　从远端仓库提取数据并尝试合并到当前分支
