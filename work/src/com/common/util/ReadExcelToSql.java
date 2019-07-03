@@ -28,7 +28,7 @@ public final class ReadExcelToSql {
     /**
      * 生成的sql文件
      */
-    private static final  String SQL_FILE = "f:\\DATA-8662-DML-04.sql";
+    private static final  String SQL_FILE = "f:\\DATA-8662-DML-05.sql";
     /**
      *
      */
