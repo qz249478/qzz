@@ -15,18 +15,4 @@
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener-->
-
-    <servlet>
-        <servlet-name>log4j-init</servlet-name>
-        <servlet-class>com.foo.Log4jInit</servlet-class>
-        <init-param>
-            <param-name>log4j-init-file</param-name>
-            <param-value>config/log/log4j.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>log4j-init</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
 </web-app>

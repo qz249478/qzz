@@ -1,6 +1,6 @@
 package com.common.util.encry;
 
-import com.common.util.encry.cipher.hex;
+import com.common.util.encry.cipher.Hex;
 import com.common.util.security.convertKey;
 import org.apache.log4j.Logger;
 
@@ -47,7 +47,7 @@ public class DESDemo {
             //System.out.println("DESEncode :" + Hex.toHexString(encodeResult));
              /*DES加密之后总会产生乱码，迫不得已用 BASE64 再包一层。但还是会产生像 “+”
              什么的字符，这些字符在某些浏览器上会被屏蔽。只得再 URLDecode一下*/
-            desCode = URLEncoder.encode(hex.parseByte2HexStr(desCodeResult),"UTF-8");
+            desCode = URLEncoder.encode(Hex.parseByte2HexStr(desCodeResult),"UTF-8");
             logger.info("加密后的字符串desCode " + desCode);
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class DESDemo {
             //用密匙初始化Cipher对象
             cipher.init(Cipher.DECRYPT_MODE,k);
             //正式进入加密，并返回加密后的二进制数组
-            byte[] DecodeResult = cipher.doFinal(hex.parseHexStr2Byte(URLEncoder.encode(code,"UTF-8")));
+            byte[] DecodeResult = cipher.doFinal(Hex.parseHexStr2Byte(URLEncoder.encode(code,"UTF-8")));
             enCode = new String(DecodeResult);
             logger.info("解密后的字符串enCode " + enCode);
         } catch (Exception e) {
