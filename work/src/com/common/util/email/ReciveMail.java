@@ -1,5 +1,7 @@
 package com.common.util.email;
 
+import com.logger.Log4jKit;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -8,10 +10,10 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ReciveMail {
+public class ReciveMail extends Log4jKit {
     private MimeMessage msg = null;
     private String saveAttchPath = "";
-    private StringBuffer bodytext = new StringBuffer();
+    private StringBuffer bodyText = new StringBuffer();
     private String dateformate = "yy-MM-dd HH:mm";
 
     public ReciveMail(MimeMessage msg){
@@ -23,7 +25,7 @@ public class ReciveMail {
 
     /**
      * 获取发送邮件者信息
-     * @return
+     * @return fromaddr 发送地址
      * @throws MessagingException
      */
     public String getFrom() throws MessagingException{
@@ -92,12 +94,12 @@ public class ReciveMail {
 
     /**
      * 获取邮件主题
-     * @return
+     * @return subject 主题名称
      * @throws UnsupportedEncodingException
      * @throws MessagingException
      */
     public String getSubject() throws UnsupportedEncodingException, MessagingException{
-        String subject = "";
+        String subject ;
         subject = MimeUtility.decodeText(msg.getSubject());
         if(subject == null){
             subject = "";
@@ -121,7 +123,7 @@ public class ReciveMail {
      * @return
      */
     public String getBodyText(){
-        return bodytext.toString();
+        return bodyText.toString();
     }
 
     /**
@@ -134,16 +136,16 @@ public class ReciveMail {
     public void getMailContent(Part part) throws MessagingException, IOException{
 
         String contentType = part.getContentType();
-        int nameindex = contentType.indexOf("name");
+        int nameIndex = contentType.indexOf("name");
         boolean conname = false;
-        if(nameindex != -1){
+        if(nameIndex != -1){
             conname = true;
         }
-        System.out.println("CONTENTTYPE:"+contentType);
+        info("邮件内容类型:"+contentType);
         if(part.isMimeType("text/plain")&&!conname){
-            bodytext.append((String)part.getContent());
+            bodyText.append((String)part.getContent());
         }else if(part.isMimeType("text/html")&&!conname){
-            bodytext.append((String)part.getContent());
+            bodyText.append((String)part.getContent());
         }else if(part.isMimeType("multipart/*")){
             Multipart multipart = (Multipart) part.getContent();
             int count = multipart.getCount();
@@ -158,7 +160,6 @@ public class ReciveMail {
 
     /**
      * 判断邮件是否需要回执，如需回执返回true，否则返回false
-     * @return
      * @throws MessagingException
      */
     public boolean getReplySign() throws MessagingException{
@@ -181,18 +182,17 @@ public class ReciveMail {
 
     /**
      * 判断此邮件是否已读，如果未读则返回false，已读返回true
-     * @return
      * @throws MessagingException
      */
     public boolean isNew() throws MessagingException{
         boolean isnew = false;
         Flags flags = ((Message)msg).getFlags();
         Flags.Flag[] flag = flags.getSystemFlags();
-        System.out.println("flags's length:"+flag.length);
+//        info("flags's length:"+flag.length);
         for(int i=0;i<flag.length;i++){
             if(flag[i]== Flags.Flag.SEEN){
                 isnew = true;
-                System.out.println("seen message .......");
+//                info("seen message .......");
                 break;
             }
         }
@@ -201,8 +201,7 @@ public class ReciveMail {
 
     /**
      * 判断是是否包含附件
-     * @param part
-     * @return
+     * @param part 附件
      * @throws MessagingException
      * @throws IOException
      */
@@ -271,6 +270,7 @@ public class ReciveMail {
             saveAttchMent((Part) part.getContent());
         }
     }
+
     /**
      * 获得保存附件的地址
      * @return
@@ -331,10 +331,8 @@ public class ReciveMail {
                 bos.flush();
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }finally{
             bos.close();
@@ -344,20 +342,21 @@ public class ReciveMail {
     }
 
     public void recive(Part part,int i) throws MessagingException, IOException{
-        System.out.println("------------------START-----------------------");
-        System.out.println("Message"+i+" subject:" + getSubject());
-        System.out.println("Message"+i+" from:" + getFrom());
-        System.out.println("Message"+i+" isNew:" + isNew());
+        info("------------------START-----------------------");
+        info("第"+i+" 邮件主题:" + getSubject());
+        info("第"+i+" 邮件发送人:" + getFrom());
+        info("第"+i+" 邮件是否已读:" + isNew());
+        //判断邮件中是否包含附件
         boolean flag = isContainAttch(part);
-        System.out.println("Message"+i+" isContainAttch:" +flag);
-        System.out.println("Message"+i+" replySign:" + getReplySign());
+        info("第"+i+" 邮件中是否包含附件:" +flag);
+        info("第"+i+" 邮件是否需要回执:" + getReplySign());
         getMailContent(part);
-        System.out.println("Message"+i+" content:" + getBodyText());
+        info("第"+i+" 邮件正文:" + getBodyText());
         setSaveAttchPath("c://temp//"+i);
         if(flag){
             saveAttchMent(part);
         }
-        System.out.println("------------------END-----------------------");
+        info("------------------END-----------------------");
     }
 
 }

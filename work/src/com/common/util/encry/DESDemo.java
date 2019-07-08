@@ -1,7 +1,7 @@
 package com.common.util.encry;
 
 import com.common.util.encry.cipher.Hex;
-import com.common.util.security.convertKey;
+import com.common.util.security.ConvertKey;
 import org.apache.log4j.Logger;
 
 import javax.crypto.Cipher;
@@ -37,7 +37,7 @@ public class DESDemo {
         String desCode = "";
         try {
             //密钥转换
-            Key k = convertKey.convertSecretKey(key);
+            Key k = ConvertKey.convertSecretKey(key);
             //Cipher对象实际完成加密操作
             cipher = Cipher.getInstance("DES");
             //用密匙初始化Cipher对象
@@ -66,7 +66,7 @@ public class DESDemo {
         logger.info("desEnCode 解密开始");
         String enCode = "";
         try {
-            Key k = convertKey.convertSecretKey(key);
+            Key k = ConvertKey.convertSecretKey(key);
             //Cipher对象实际完成加密操作
             cipher = Cipher.getInstance("DES");
             //用密匙初始化Cipher对象

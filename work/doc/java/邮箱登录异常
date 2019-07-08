@@ -1,0 +1,9 @@
+1、imap方式登录异常
+    javax.net.ssl.SSLHandshakeException:
+    Received fatal alert: handshake_failure
+    解决方案
+    这个是jdk导致的，jdk里面有一个jce的包，安全性机制导致的访问https会报错，
+    官网上有替代的jar包，换掉就好了
+    目录 %JAVA_HOME%\jre\lib\security里的local_policy.jar,US_export_policy.jar
+    JDK7 http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html
+    JDK8 http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html

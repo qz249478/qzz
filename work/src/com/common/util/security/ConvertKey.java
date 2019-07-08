@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
  * @Description 秘钥转换工具类
  *
  */
-public class convertKey {
+public class ConvertKey {
 
     /**
      * @Description 生成密钥Key

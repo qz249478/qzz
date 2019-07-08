@@ -31,7 +31,7 @@ public class MainTest {
     }
 
     public static void main(String[] args) {
-        String reg1 = "^[a-z|A-Z][a-z|A-Z|.|·| |\\s]*[a-z|A-Z]$";
+        /*String reg1 = "^[a-z|A-Z][a-z|A-Z|.|·| |\\s]*[a-z|A-Z]$";
         String reg2 = "^[\u4E00-\u9FA5][\u4E00-\u9FA5|.|·| |\\s]*[\u4E00-\u9FA5]$";
         String appntName = "JI-EYING CHEN";
         int tNameLength = chineseLength(appntName);
@@ -41,6 +41,14 @@ public class MainTest {
             System.out.print("true");
         }else {
             System.out.print("false");
-        }
+        }*/
+
+        float ptPrem = 0.057f;
+        String mPrem = "50150000";
+        double mainMnt = Double.parseDouble(mPrem);
+        double hmxBf = (mainMnt / 1000D) * (double)ptPrem;
+//        BigDecimal convertVal = new BigDecimal(hmxBf+"");
+//        hmPrem = convertVal.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+        System.out.print(hmxBf);
     }
 }

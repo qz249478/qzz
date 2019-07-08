@@ -13,6 +13,8 @@ import java.util.Properties;
 
 public class ReceiveMailTest extends Log4jKit {
 
+    private static final String SSl_FACTRY = "java.net.ssl.SSLSocketFactory";
+
     /**
      * pop3协议连接邮箱
      * @param username 邮箱用户名
@@ -64,34 +66,50 @@ public class ReceiveMailTest extends Log4jKit {
 
         // 创建一个有具体连接信息的Properties对象
         Properties props = new Properties();
-        props.setProperty("mail.store.protocol", protocol);//协议
-        props.setProperty("mail.imap.auth.login.disable", "true");
-        props.setProperty("mail.imap.port", port); // 端口
-        props.setProperty("mail.imap.host", pop3Server); // imap服务器
-
-        Session session = Session.getInstance(props, null);
-        session.setDebug(true);
+        // 协议
+        props.setProperty("mail.imap.host", pop3Server);
+        // imap服务器
+        props.setProperty("mail.store.protocol", protocol);
+        // 端口
+        props.setProperty("mail.imap.port", port);
+        props.setProperty("mail.imap.auth.login.disable", "false");
+        // ssl登陆
+        props.setProperty("mail.imap.ssl.enable", "true");
+//        props.setProperty("mail.imap.auth.login.disable", "true");
+//        props.setProperty("mail.imap.socketFactory.class", SSl_FACTRY);
+//        props.setProperty("mail.imap.socketFactory.port", port);
+        // 创建Session实例对象
+        Session session = Session.getInstance(props);
+        //调试用true
+        session.setDebug(false);
         IMAPStore store = null;
         IMAPFolder folder = null;
+        // 创建IMAP协议的Store对象
         store = (IMAPStore) session.getStore(protocol);
-        store.connect(pop3Server, username, password);
+        // 连接邮件服务器
+        store.connect(username, password);
         info("创建邮件会话完成，打开收件箱开始读取邮件");
         // false代表未读，true代表已读
         FlagTerm ft = new FlagTerm(new Flags(Flags.Flag.SEEN), false);
-        folder = (IMAPFolder) store.getFolder("INBOX");// 获得收件箱
-        folder.open(Folder.READ_WRITE); // 打开收件箱，设置为可读写状态
+        // 获得收件箱
+        folder = (IMAPFolder) store.getFolder("INBOX");
+        // 打开收件箱，设置为只读状态
+        folder.open(Folder.READ_ONLY);
 
         // 获得邮件夹Folder内的所有邮件Message对象
         Message[] messages = folder.getMessages();
         ReciveMail rm = null;
-        for(int i=0;i< messages.length ;i++){
+        /*for(int i=0;i< messages.length ;i++){
             rm = new ReciveMail((MimeMessage) messages[i]);
             rm.recive(messages[i],i);
-        }
+        }*/
+        rm = new ReciveMail((MimeMessage) messages[1]);
+        rm.recive(messages[1],1);
         folder.close(false);
         store.close();
     }
+
     public static void main(String[] args) throws Exception {
-        connectImapMail("quanzhengzheng@zealinfo.net","qz249478abc!");
+        connectImapMail("quanzhengzheng@zealinfo.net","QZ249478abc");
     }
 }
