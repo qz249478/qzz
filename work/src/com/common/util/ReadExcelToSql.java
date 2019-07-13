@@ -28,7 +28,7 @@ public final class ReadExcelToSql {
     /**
      * 生成的sql文件
      */
-    private static final  String SQL_FILE = "f:\\DATA-8662-DML-05.sql";
+    private static final  String SQL_FILE = "f:\\DATA-8662-DML-06.sql";
     /**
      *
      */
@@ -101,10 +101,10 @@ public final class ReadExcelToSql {
                 if (row == null) {
                     continue;
                 }
-                /*row.getCell(6).setCellType(CellType.STRING);
+                row.getCell(6).setCellType(CellType.STRING);
                 if ("#N/A".equals(row.getCell(6).getStringCellValue())) {
                     continue;
-                }*/
+                }
                 //姓名
                 row.getCell(1).setCellType(CellType.STRING);
                 String name = row.getCell(1).getStringCellValue();
@@ -121,24 +121,24 @@ public final class ReadExcelToSql {
                 row.getCell(4).setCellType(CellType.STRING);
                 String birthday = row.getCell(4).getStringCellValue();
                 //核心客户号
-//                String coreCustNo = row.getCell(6).getStringCellValue();
+                String coreCustNo = row.getCell(6).getStringCellValue();
                 //客户号
-                /*row.getCell(5).setCellType(CellType.STRING);
-                String customerNo = row.getCell(5).getStringCellValue();*/
+                row.getCell(5).setCellType(CellType.STRING);
+                String customerNo = row.getCell(5).getStringCellValue();
 
                 StringBuilder insSql = new StringBuilder();
-                insSql.append("('")
+                /*insSql.append("('")
                         .append(name).append("', '")
                         .append(idType).append("', '")
                         .append(sex).append("', '")
                         .append(idNo).append("', date'")
                         .append(birthday).append("' ),\n");
-                content.append(insSql);
+                content.append(insSql);*/
                 //update eccustomer set coreCustNo = '' where customerNo = '';
-                /*insSql.append("update eccustomer set coreCustNo = '")
+                insSql.append("update eccustomer set coreCustNo = '")
                         .append(coreCustNo).append("' where customerNo = '")
                         .append(customerNo).append("';\n");
-                content.append(insSql);*/
+                content.append(insSql);
                 /*insSql.append("or idno = '").append(idNo).append("' \n");
                 content.append(insSql);*/
             }

@@ -1,0 +1,14 @@
+Oracle:
+--查询当前月份的最后一天：
+    select last_day(sysdate) from dual;
+--查询某天所在月份的最后一天：
+    select last_day(to_date('1992-10-09','yyyy-mm-dd')) from dual;
+
+
+Mysql：
+#查询当前月份的最后一天：
+    SELECT LAST_DAY(SYSDATE());
+#查询某天所在月份的最后一天：
+    SELECT last_day(STR_TO_DATE('1992-10-09','%Y-%m-%d'));
+#时间转字符串
+    select date_format(now(), '%Y-%m-%d');
